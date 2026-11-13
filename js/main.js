@@ -289,8 +289,18 @@
       localStorage.setItem(storageKey, JSON.stringify(comments));
     }
 
+    function getLikedSet() {
+      try {
+        return JSON.parse(localStorage.getItem(`liked_${storageKey}`) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
     function renderComments() {
       const comments = loadComments();
+      const likedSet = getLikedSet();
+
       if (commentCountEl) {
         commentCountEl.textContent = `${comments.length} ${comments.length === 1 ? 'Comment' : 'Comments'}`;
       }
@@ -303,9 +313,11 @@
       }
 
       commentsList.innerHTML = comments.map((c, idx) => {
+        const commentId = String(c.id || idx);
+        const isLiked = likedSet.includes(commentId);
         const initials = c.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
         return `
-          <div class="comment-item" data-comment-id="${c.id || idx}">
+          <div class="comment-item" data-comment-id="${commentId}">
             <div class="comment-item-header">
               <div class="comment-author-info">
                 <div class="comment-avatar">${initials}</div>
@@ -322,7 +334,7 @@
               ${escapeHtml(c.body)}
             </div>
             <div class="comment-item-actions">
-              <button type="button" class="comment-like-btn" onclick="likeComment('${postId}', '${c.id || idx}')">
+              <button type="button" class="comment-like-btn ${isLiked ? 'liked' : ''}" onclick="likeComment('${postId}', '${commentId}')" title="${isLiked ? 'Unlike' : 'Like'}">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                 <span>${c.likes || 0}</span>
               </button>
@@ -371,11 +383,34 @@
     window.likeComment = function (post, commentId) {
       const comments = loadComments();
       const target = comments.find((c, idx) => (c.id === commentId || String(idx) === String(commentId)));
-      if (target) {
-        target.likes = (target.likes || 0) + 1;
-        saveComments(comments);
-        renderComments();
+      if (!target) return;
+
+      const likedKey = `liked_${storageKey}`;
+      let likedSet = [];
+      try {
+        likedSet = JSON.parse(localStorage.getItem(likedKey) || '[]');
+      } catch (e) {
+        likedSet = [];
       }
+
+      const commentIdStr = String(commentId);
+      const alreadyLiked = likedSet.includes(commentIdStr);
+
+      if (alreadyLiked) {
+        // Toggle unlike (decrement)
+        target.likes = Math.max(0, (target.likes || 1) - 1);
+        likedSet = likedSet.filter(id => id !== commentIdStr);
+        showToast('Like removed');
+      } else {
+        // Like once (increment)
+        target.likes = (target.likes || 0) + 1;
+        likedSet.push(commentIdStr);
+        showToast('Liked comment!');
+      }
+
+      localStorage.setItem(likedKey, JSON.stringify(likedSet));
+      saveComments(comments);
+      renderComments();
     };
 
     function escapeHtml(str) {

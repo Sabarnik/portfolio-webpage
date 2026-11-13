@@ -343,6 +343,10 @@ section {
   color: #ffffff !important;
 }
 
+.mobile-only {
+  display: none !important;
+}
+
 /* --- Theme Toggle Button --- */
 .theme-toggle {
   background: var(--surface);
@@ -1652,6 +1656,11 @@ section {
   color: #ef4444;
 }
 
+.comment-like-btn.liked svg {
+  fill: #ef4444;
+  stroke: #ef4444;
+}
+
 .comment-like-btn svg {
   width: 14px;
   height: 14px;
@@ -1802,6 +1811,14 @@ section {
   .nav-links.open {
     transform: translateX(0);
     display: flex;
+  }
+
+  .mobile-only {
+    display: block !important;
+  }
+
+  .nav-contact-pill {
+    display: none !important;
   }
 
   .nav-links a {
