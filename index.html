@@ -553,7 +553,12 @@
             </div>
           </div>
         </div>
-        <form class="contact-form" id="contactForm">
+        <form class="contact-form" id="contactForm" action="https://formsubmit.co/sabarniklahiri@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New Inquiry from SabarnikLahiri.dev">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <!-- Honeypot field for spam prevention -->
+          <input type="text" name="_honey" style="display:none">
           <div class="form-group">
             <label for="name">Your Name</label>
             <input type="text" id="name" name="name" placeholder="Name or Organization" required>

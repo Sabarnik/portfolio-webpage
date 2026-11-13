@@ -124,33 +124,73 @@
     highlightNav();
   }
 
-  // --- Contact Form Submission with Feedback ---
+  // --- Contact Form Submission via FormSubmit (Direct to Email) ---
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {
-    contactForm.addEventListener('submit', function (e) {
+    contactForm.addEventListener('submit', async function (e) {
       e.preventDefault();
 
       const btn = contactForm.querySelector('button[type="submit"]');
       const originalText = btn.innerHTML;
 
-      btn.innerHTML = 'Sending...';
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      const messageInput = document.getElementById('message');
+
+      const name = nameInput ? nameInput.value.trim() : '';
+      const email = emailInput ? emailInput.value.trim() : '';
+      const message = messageInput ? messageInput.value.trim() : '';
+
+      if (!name || !email || !message) {
+        showToast('Please fill out all required fields.');
+        return;
+      }
+
+      btn.innerHTML = 'Sending message...';
       btn.disabled = true;
 
-      setTimeout(function () {
-        btn.innerHTML = '✓ Message Sent Successfully!';
-        btn.style.background = '#10b981';
-        btn.style.borderColor = '#10b981';
+      try {
+        const response = await fetch('https://formsubmit.co/ajax/sabarniklahiri@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            message: message,
+            _subject: `New Portfolio Message from ${name} (${email})`,
+            _template: 'table',
+            _captcha: 'false'
+          })
+        });
 
-        showToast('Message sent! Sabarnik will get back to you soon.');
+        const data = await response.json();
 
+        if (response.ok || data.success === 'true' || data.success === true) {
+          btn.innerHTML = '✓ Message Sent Successfully!';
+          btn.style.background = '#10b981';
+          btn.style.borderColor = '#10b981';
+
+          showToast('Message sent! Sabarnik will get back to you shortly.');
+          contactForm.reset();
+        } else {
+          throw new Error(data.message || 'Submission failed');
+        }
+      } catch (err) {
+        console.warn('FormSubmit AJAX fallback:', err);
+        // Fallback: If adblocker blocks cross-origin fetch, submit form traditionally
+        contactForm.submit();
+        return;
+      } finally {
         setTimeout(function () {
           btn.innerHTML = originalText;
           btn.style.background = '';
           btn.style.borderColor = '';
           btn.disabled = false;
-          contactForm.reset();
-        }, 3000);
-      }, 900);
+        }, 3500);
+      }
     });
   }
 
