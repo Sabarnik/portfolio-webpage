@@ -29,6 +29,16 @@
     });
   }
 
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   // Initial apply
   applyTheme(getPreferredTheme());
 
@@ -173,7 +183,7 @@
           btn.style.background = '#10b981';
           btn.style.borderColor = '#10b981';
 
-          showToast('Message sent! Sabarnik will get back to you shortly.');
+          showContactModal(name, email);
           contactForm.reset();
         } else {
           throw new Error(data.message || 'Submission failed');
@@ -190,6 +200,47 @@
           btn.style.borderColor = '';
           btn.disabled = false;
         }, 3500);
+      }
+    });
+  }
+
+  // --- Contact Success Modal Controls ---
+  const contactModal = document.getElementById('contactModal');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+  const modalMessage = document.getElementById('modalMessage');
+
+  function showContactModal(senderName, senderEmail) {
+    if (!contactModal) {
+      showToast('Message sent! Sabarnik will get back to you shortly.');
+      return;
+    }
+
+    if (modalMessage && senderName) {
+      modalMessage.innerHTML = `Thank you, <strong>${escapeHtml(senderName)}</strong>! Your message has been sent directly to Sabarnik's inbox. He will review your inquiry and get back to you at <strong>${escapeHtml(senderEmail || '')}</strong> shortly.`;
+    }
+
+    contactModal.classList.add('active');
+    contactModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function hideContactModal() {
+    if (!contactModal) return;
+    contactModal.classList.remove('active');
+    contactModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  if (modalCloseBtn) modalCloseBtn.addEventListener('click', hideContactModal);
+  if (modalConfirmBtn) modalConfirmBtn.addEventListener('click', hideContactModal);
+  if (contactModal) {
+    contactModal.addEventListener('click', function (e) {
+      if (e.target === contactModal) hideContactModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && contactModal.classList.contains('active')) {
+        hideContactModal();
       }
     });
   }

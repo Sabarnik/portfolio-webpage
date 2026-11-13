@@ -593,6 +593,32 @@
     </div>
   </footer>
 
+  <!-- Contact Success Modal Popup -->
+  <div class="modal-overlay" id="contactModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <button type="button" class="modal-close" id="modalCloseBtn" aria-label="Close modal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="modal-icon-wrapper">
+        <div class="modal-icon-glow"></div>
+        <div class="modal-icon-circle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+      </div>
+      <h3 class="modal-title">Message Received!</h3>
+      <p class="modal-desc" id="modalMessage">
+        Thank you for reaching out! Your message has been sent directly to Sabarnik's inbox. He will review your inquiry and get back to you shortly.
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" id="modalConfirmBtn" style="width: 100%; justify-content: center;">
+          Got it, thanks!
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script src="js/main.js"></script>
 </body>
 </html>
