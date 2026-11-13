@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI and Me: What 1 Year in Tech Taught Me — Sabarnik Lahiri</title>
+  <meta name="description" content="After spending a year as a Software Engineer, one thing is clear: AI accelerates execution, but fundamentals still determine direction. Here is what 1 year in tech taught me about code, context, and ownership.">
+  <meta name="keywords" content="AI Software Engineering, Software Development AI, Junior Engineer Reflections, Code Ownership, Software Engineering Fundamentals, Sabarnik Lahiri">
+  <meta name="author" content="Sabarnik Lahiri">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="AI and Me: What 1 Year in Tech Taught Me — Sabarnik Lahiri">
+  <meta property="og:description" content="AI is changing software development rapidly — but not in the way most people think. Why code is only the visible layer of engineering.">
+  <meta property="og:image" content="ai-and-me.jpg">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://sabarniklahiri.dev/post-ai-and-me.html">
+  <meta property="article:published_time" content="2026-11-12">
+  <meta property="article:author" content="Sabarnik Lahiri">
+  <meta property="article:tag" content="Software Engineering">
+  <meta property="article:tag" content="AI">
+  <meta property="article:tag" content="Career">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI and Me: What 1 Year in Tech Taught Me">
+  <meta name="twitter:description" content="AI can generate implementation. It cannot inherit ownership. Reflections from 1 year as a software engineer.">
+  <meta name="twitter:image" content="ai-and-me.jpg">
+
+  <link rel="canonical" href="https://sabarniklahiri.dev/post-ai-and-me.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "AI and Me: What 1 Year in Tech Taught Me About Code, Context, and Ownership",
+    "image": "https://sabarniklahiri.dev/ai-and-me.jpg",
+    "datePublished": "2026-11-12",
+    "dateModified": "2026-11-12",
+    "author": {
+      "@type": "Person",
+      "name": "Sabarnik Lahiri",
+      "url": "https://sabarniklahiri.dev"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Sabarnik Lahiri"
+    },
+    "description": "After spending the last year as a Software Engineer, AI has changed development rapidly. But code is only the visible layer of engineering — underneath sits context, trade-offs, and ownership.",
+    "mainEntityOfPage": "https://sabarniklahiri.dev/post-ai-and-me.html"
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="nav-logo">sabarnik<span>.</span></a>
+      <div class="nav-controls">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#skills">Skills</a></li>
+          <li><a href="index.html#experience">Experience</a></li>
+          <li><a href="index.html#education">Education</a></li>
+          <li><a href="blog.html" class="active">Blog</a></li>
+          <li><a href="index.html#contact" class="btn btn-primary btn-sm">Contact</a></li>
+        </ul>
+        <button class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Post Header -->
+  <header class="post-header">
+    <div class="container">
+      <div class="post-meta">
+        <span class="blog-card-tag">Engineering</span>
+        <span class="blog-card-date">November 12, 2026</span>
+        <span class="blog-read-time">6 min read</span>
+      </div>
+      <h1>AI and Me: What 1 Year in Tech Taught Me</h1>
+      <p class="lead">AI is changing software development rapidly — but not in the way most people think. Why code is only the visible layer of engineering, and why fundamentals matter now more than ever.</p>
+    </div>
+  </header>
+
+  <!-- Featured Cover Image -->
+  <div class="container">
+    <div class="post-cover-image">
+      <img src="ai-and-me.jpg" alt="AI and Me: What 1 Year in Tech Taught Me infographic by Sabarnik Lahiri" width="1024" height="680" loading="eager">
+      <div class="post-cover-caption">
+        "Tools change. Fundamentals don't. Keep building." — Sabarnik Lahiri
+      </div>
+    </div>
+  </div>
+
+  <!-- Post Content -->
+  <article class="post-content">
+    <p>
+      After spending the last year interning and working as a Software Engineer, one thing has become very clear to me:
+    </p>
+
+    <p>
+      <strong>AI is changing software development rapidly — but not in the way most people think.</strong>
+    </p>
+
+    <p>
+      The conversation online often swings between two extremes:
+    </p>
+
+    <ul>
+      <li><em>“AI will replace engineers entirely.”</em></li>
+      <li><em>“AI is just another autocomplete tool.”</em></li>
+    </ul>
+
+    <p>
+      From what I’ve experienced firsthand while building enterprise software, the reality sits squarely in between. AI dramatically increases speed. But engineering was never just about speed.
+    </p>
+
+    <h2>The Practical Superpower: Compressing Distance</h2>
+    <p>
+      Over the past year, I’ve routinely used AI for:
+    </p>
+
+    <ul>
+      <li><strong>Understanding unfamiliar codebases:</strong> Quick summaries of architectural flows across large repositories.</li>
+      <li><strong>Exploring frameworks faster:</strong> Synthesizing documentation into tailored idiomatic snippets.</li>
+      <li><strong>Debugging edge cases:</strong> Spotting subtle off-by-one errors or concurrency quirks in async logic.</li>
+      <li><strong>Generating repetitive boilerplate:</strong> Writing DTO mappings, test fixtures, and schema definitions.</li>
+      <li><strong>Organizing my thoughts:</strong> Rubber-ducking solutions when I was stuck on complex business logic.</li>
+    </ul>
+
+    <p>
+      In many ways, it compresses the distance between <em>not knowing</em> and <em>starting</em>.
+    </p>
+
+    <p>
+      And that matters tremendously. Because one of the hardest parts of being an early-career engineer is not the complexity itself — it’s the intimidation that comes before you even begin. AI lowers that barrier and gives you the confidence to take the first step.
+    </p>
+
+    <blockquote>
+      <p>“AI can generate implementation. It cannot inherit ownership. And ownership is ultimately what engineering demands.”</p>
+    </blockquote>
+
+    <h2>Code Is Only the Visible Layer</h2>
+    <p>
+      The more I worked on production systems with real business impact, the more I realized something foundational:
+    </p>
+
+    <p>
+      <strong>Code is only the visible layer of engineering.</strong>
+    </p>
+
+    <p>
+      Underneath the code sits the true substance of software engineering:
+    </p>
+
+    <ul>
+      <li>Product decisions and business trade-offs</li>
+      <li>Scalability and failure modes</li>
+      <li>Imperfect legacy systems and technical debt</li>
+      <li>Team communication and cross-functional alignment</li>
+      <li>Years of accumulated business domain context that no model fully grasps</li>
+    </ul>
+
+    <p>
+      An LLM can generate 200 lines of syntactically valid code in seconds. But when that code causes a production race condition at 2:00 AM, the model isn't on call. You are. The engineer owns the outcome.
+    </p>
+
+    <h2>From Recall to Judgment</h2>
+    <p>
+      One of the more interesting side effects of AI is how it changes learning itself.
+    </p>
+
+    <p>
+      In previous generations, developers spent years memorizing syntax, patterns, and documentation structures because access to information was the bottleneck.
+    </p>
+
+    <p>
+      Today, information is immediate. The challenge is no longer: <em>“How do I find an answer?”</em>
+    </p>
+
+    <p>
+      It is: <strong>“How do I evaluate whether this answer deserves trust?”</strong>
+    </p>
+
+    <p>
+      That shift feels profound to me. Because it means the value of an engineer increasingly comes from <strong>judgment rather than recall</strong>.
+    </p>
+
+    <div class="post-callout">
+      <h4>What AI Can't Replace</h4>
+      <p>The ability to ask precise questions, identify flawed assumptions, reason through ambiguity, and understand consequences beyond the code itself — these are human cognitive traits that cannot be automated.</p>
+    </div>
+
+    <h2>The Dangerous Illusion of Competence</h2>
+    <p>
+      I’ve also realized that AI can create a dangerous illusion of competence:
+    </p>
+
+    <ul>
+      <li>Generated code often looks correct at first glance.</li>
+      <li>AI explanations sound immensely confident and convincing.</li>
+      <li>Architecture suggestions appear polished and enterprise-ready.</li>
+    </ul>
+
+    <p>
+      But software engineering has a relentless way of exposing shallow understanding very quickly — especially in production environments under high load.
+    </p>
+
+    <p>
+      Eventually, fundamentals catch up with everyone.
+    </p>
+
+    <p>
+      And maybe that’s why I’ve started appreciating fundamentals more, not less:
+    </p>
+
+    <ul>
+      <li><strong>Data structures & algorithms:</strong> Knowing why a hash map or B-tree behaves the way it does.</li>
+      <li><strong>System design:</strong> Understanding bottlenecks, partitioning, and consistency boundaries.</li>
+      <li><strong>Concurrency:</strong> Reasoning about threads, race conditions, and deadlocks.</li>
+      <li><strong>Clean abstractions:</strong> Building code that teammates can maintain two years from now.</li>
+      <li><strong>Communication:</strong> Explaining technical decisions clearly to non-engineers.</li>
+    </ul>
+
+    <p>
+      <strong>AI accelerates execution, but fundamentals still determine direction.</strong>
+    </p>
+
+    <h2>The Road Ahead</h2>
+    <p>
+      After a year in tech, my perspective is simple: AI will absolutely reshape this industry. But I don’t think the most valuable engineers will be the ones who rely on AI the most.
+    </p>
+
+    <p>
+      I think they’ll be the ones who combine:
+    </p>
+
+    <ol>
+      <li>Deep thinking</li>
+      <li>Adaptability</li>
+      <li>Technical fundamentals</li>
+      <li>The wisdom to use AI without outsourcing their understanding</li>
+    </ol>
+
+    <p>
+      Still learning. Still making mistakes. Still discovering how much there is left to understand.
+    </p>
+
+    <p>
+      And honestly, that’s probably the best part of engineering.
+    </p>
+
+    <!-- Social Share Bar -->
+    <div class="share-bar-container">
+      <div class="share-bar-inner">
+        <div class="share-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+          Share this article
+        </div>
+        <div class="share-buttons">
+          <a href="#" class="share-btn" data-share="twitter" aria-label="Share on X">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X / Twitter
+          </a>
+          <a href="#" class="share-btn" data-share="linkedin" aria-label="Share on LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            LinkedIn
+          </a>
+          <a href="#" class="share-btn" data-share="whatsapp" aria-label="Share on WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+            WhatsApp
+          </a>
+          <button type="button" class="share-btn share-btn-copy" data-share="copy">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Copy Link
+          </button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Interactive Comment Section -->
+  <section class="comments-section" data-post-id="ai-and-me">
+    <div class="comments-header">
+      <h3>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        Discussion
+      </h3>
+      <span class="comments-count-pill" id="commentCount">2 Comments</span>
+    </div>
+
+    <!-- Comment Form -->
+    <form class="comment-form" id="commentForm">
+      <div class="comment-form-row">
+        <div>
+          <input type="text" id="commentName" placeholder="Your Name *" required>
+        </div>
+        <div>
+          <input type="text" id="commentRole" placeholder="Role / Title (e.g. Frontend Engineer)">
+        </div>
+      </div>
+      <div>
+        <textarea id="commentText" placeholder="Share your perspective or ask a question..." required></textarea>
+      </div>
+      <div class="comment-form-footer">
+        <span class="comment-form-note">Markdown formatting supported. Comments are moderated.</span>
+        <button type="submit" class="btn btn-primary btn-sm">
+          Post Comment
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </div>
+    </form>
+
+    <!-- Comments List -->
+    <div class="comments-list" id="commentsList">
+      <!-- Injected by JavaScript -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Sabarnik Lahiri. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="blog.html">← Back to Blog</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="https://www.linkedin.com/in/sabarniklahiri14" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enterprise-Grade Next.js: Patterns That Scale — Sabarnik Lahiri</title>
+  <meta name="description" content="Architecture patterns for building Next.js applications that handle enterprise workloads — server components, caching strategies, and team-friendly project structure.">
+  <meta name="author" content="Sabarnik Lahiri">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Enterprise-Grade Next.js: Patterns That Scale">
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2026-08-22">
+  <link rel="canonical" href="https://sabarniklahiri.dev/blog/nextjs-enterprise-patterns">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="nav-logo">sabarnik<span>.</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#education">Education</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="index.html#contact" class="btn btn-primary btn-sm">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <header class="post-header">
+    <div class="container">
+      <div class="post-meta">
+        <span class="blog-card-tag">Frontend</span>
+        <span class="blog-card-date">August 22, 2026</span>
+        <span class="blog-read-time">9 min read</span>
+      </div>
+      <h1>Enterprise-Grade Next.js: Patterns That Scale</h1>
+      <p>Architecture patterns for building Next.js applications that handle enterprise workloads — server components, caching strategies, and team-friendly project structure.</p>
+    </div>
+  </header>
+
+  <article class="post-content">
+    <p>
+      Next.js has evolved from a React meta-framework into a full production platform. At Acceleron Solutions, we use it as the foundation for enterprise web applications that serve thousands of users daily. Here are the architecture patterns that keep our codebase maintainable as teams and features grow.
+    </p>
+
+    <h2>Project Organization</h2>
+    <p>
+      The App Router introduced in Next.js 13+ changed how we think about project structure. For enterprise applications, I use a feature-based organization:
+    </p>
+
+    <pre><code>src/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/
+│   │   └── layout.tsx
+│   ├── (dashboard)/
+│   │   ├── overview/
+│   │   ├── reports/
+│   │   ├── settings/
+│   │   └── layout.tsx
+│   ├── api/
+│   │   └── v1/
+│   └── layout.tsx
+├── components/
+│   ├── ui/           # Base design system
+│   ├── features/     # Feature-specific
+│   └── layouts/      # Page layouts
+├── lib/
+│   ├── api/          # API client functions
+│   ├── auth/         # Auth utilities
+│   ├── hooks/        # Custom React hooks
+│   └── utils/        # General utilities
+├── services/         # Business logic layer
+└── types/            # TypeScript definitions</code></pre>
+
+    <p>
+      The route groups <code>(auth)</code> and <code>(dashboard)</code> let us apply different layouts without affecting URL structure. The <code>lib/</code> directory contains pure logic that's independent of React rendering.
+    </p>
+
+    <h2>Server Components by Default</h2>
+    <p>
+      The biggest mindset shift: <strong>everything is a Server Component unless it needs interactivity.</strong> This means data fetching, layout rendering, and static content all happen on the server. Client Components are reserved for forms, interactive widgets, and components that need browser APIs.
+    </p>
+
+    <pre><code>// Server Component — fetches data, no client JS
+async function DashboardOverview() {
+  const metrics = await getMetrics();
+  const recentActivity = await getActivity({ limit: 10 });
+
+  return (
+    &lt;div className="grid grid-cols-3 gap-6"&gt;
+      &lt;MetricCards data={metrics} /&gt;
+      &lt;ActivityFeed items={recentActivity} /&gt;
+      &lt;QuickActions /&gt;  {/* This one is 'use client' */}
+    &lt;/div&gt;
+  );
+}</code></pre>
+
+    <h2>Data Fetching Patterns</h2>
+    <p>
+      For enterprise apps, data fetching needs to be both efficient and type-safe. We use a layered approach:
+    </p>
+
+    <ol>
+      <li><strong>API client layer</strong> — Type-safe functions that call our backend services</li>
+      <li><strong>Service layer</strong> — Business logic that composes multiple API calls</li>
+      <li><strong>Component layer</strong> — Server Components call services directly</li>
+    </ol>
+
+    <h2>Caching Strategy</h2>
+    <p>
+      Next.js provides multiple caching layers. In enterprise contexts, understanding when to cache and when not to is critical:
+    </p>
+
+    <ul>
+      <li><strong>Static data</strong> (product catalogs, reference data) — Cache at build time with <code>generateStaticParams</code></li>
+      <li><strong>User-specific data</strong> (dashboards, reports) — No cache, fetch fresh on every request</li>
+      <li><strong>Shared dynamic data</strong> (aggregated metrics) — Time-based revalidation (30s-5min)</li>
+    </ul>
+
+    <h2>Error Boundaries and Loading States</h2>
+    <p>
+      Enterprise users expect reliability. We use Next.js's built-in error and loading patterns extensively:
+    </p>
+
+    <ul>
+      <li><code>error.tsx</code> at each route segment for graceful error handling</li>
+      <li><code>loading.tsx</code> with skeleton UI that matches the actual layout</li>
+      <li><code>not-found.tsx</code> for clean 404 experiences</li>
+      <li>Global error boundary for unexpected failures</li>
+    </ul>
+
+    <h2>Authentication and Authorization</h2>
+    <p>
+      We use middleware for route protection — a single file that intercepts every request before it reaches a page:
+    </p>
+
+    <pre><code>// middleware.ts
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get('session');
+
+  if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  // Role-based access control
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    const role = decodeToken(token)?.role;
+    if (role !== 'admin') {
+      return NextResponse.redirect(new URL('/unauthorized', request.url));
+    }
+  }
+}</code></pre>
+
+    <h2>Performance Monitoring</h2>
+    <p>
+      In production, we monitor Core Web Vitals religiously. Next.js's built-in web vitals reporting, combined with custom performance marks, gives us visibility into real user experience. The key metrics we track: LCP under 2.5s, FID under 100ms, and CLS under 0.1.
+    </p>
+
+    <h2>Key Takeaways</h2>
+    <p>
+      Building enterprise Next.js isn't about using every feature — it's about choosing the right patterns for your scale. Start with Server Components, add client interactivity only where needed, and invest in your data fetching and error handling layers early. Your future self (and your team) will thank you.
+    </p>
+
+    <p>
+      Working on a Next.js enterprise project? <a href="index.html#contact">Let's connect</a> and share notes.
+    </p>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Sabarnik Lahiri. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="blog.html">← Back to Blog</a></li>
+        <li><a href="index.html">Home</a></li>
+      </ul>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

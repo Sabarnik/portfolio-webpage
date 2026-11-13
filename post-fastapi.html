@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building Scalable REST APIs with FastAPI — Sabarnik Lahiri</title>
+  <meta name="description" content="A deep dive into designing production-ready APIs with FastAPI — covering async patterns, dependency injection, middleware, and performance optimization strategies.">
+  <meta name="keywords" content="FastAPI, REST API, Python, Async, Backend Development, API Design, Performance Optimization">
+  <meta name="author" content="Sabarnik Lahiri">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Building Scalable REST APIs with FastAPI — Sabarnik Lahiri">
+  <meta property="og:description" content="A deep dive into designing production-ready APIs with FastAPI — async patterns, dependency injection, and performance optimization.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://sabarniklahiri.dev/blog/scalable-rest-apis-fastapi">
+  <meta property="article:published_time" content="2026-11-01">
+  <meta property="article:author" content="Sabarnik Lahiri">
+  <meta property="article:tag" content="FastAPI">
+  <meta property="article:tag" content="Python">
+  <meta property="article:tag" content="Backend">
+
+  <link rel="canonical" href="https://sabarniklahiri.dev/blog/scalable-rest-apis-fastapi">
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Building Scalable REST APIs with FastAPI and Python",
+    "datePublished": "2026-11-01",
+    "dateModified": "2026-11-01",
+    "author": {
+      "@type": "Person",
+      "name": "Sabarnik Lahiri",
+      "url": "https://sabarniklahiri.dev"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Sabarnik Lahiri"
+    },
+    "description": "A deep dive into designing production-ready APIs with FastAPI — covering async patterns, dependency injection, middleware, and performance optimization strategies.",
+    "mainEntityOfPage": "https://sabarniklahiri.dev/blog/scalable-rest-apis-fastapi"
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="nav-logo">sabarnik<span>.</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#education">Education</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="index.html#contact" class="btn btn-primary btn-sm">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Post Header -->
+  <header class="post-header">
+    <div class="container">
+      <div class="post-meta">
+        <span class="blog-card-tag">Backend</span>
+        <span class="blog-card-date">November 1, 2026</span>
+        <span class="blog-read-time">8 min read</span>
+      </div>
+      <h1>Building Scalable REST APIs with FastAPI and Python</h1>
+      <p>A deep dive into designing production-ready APIs — covering async patterns, dependency injection, middleware, and performance optimization strategies.</p>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article class="post-content">
+    <p>
+      FastAPI has rapidly become one of the most popular Python frameworks for building APIs. Its combination of automatic OpenAPI documentation, type hints for validation, and native async support makes it a compelling choice for production systems. In this post, I'll share patterns that have worked well in the enterprise applications I've built at Acceleron Solutions.
+    </p>
+
+    <h2>Why FastAPI?</h2>
+    <p>
+      Before diving into patterns, let's understand what makes FastAPI stand out. At its core, FastAPI leverages Python type hints not just for code clarity, but for automatic request validation, serialization, and documentation generation. This isn't just a developer convenience — it eliminates entire categories of runtime errors.
+    </p>
+
+    <blockquote>
+      <p>The best API is one that's impossible to use incorrectly. FastAPI gets you closer to that ideal through its type system.</p>
+    </blockquote>
+
+    <h2>Project Structure That Scales</h2>
+    <p>
+      A well-organized project structure is the foundation of any scalable API. Here's the layout I've refined through building several enterprise services:
+    </p>
+
+    <pre><code>app/
+├── api/
+│   ├── v1/
+│   │   ├── endpoints/
+│   │   │   ├── users.py
+│   │   │   ├── auth.py
+│   │   │   └── documents.py
+│   │   └── router.py
+│   └── deps.py
+├── core/
+│   ├── config.py
+│   ├── security.py
+│   └── exceptions.py
+├── models/
+│   ├── user.py
+│   └── document.py
+├── schemas/
+│   ├── user.py
+│   └── document.py
+├── services/
+│   ├── user_service.py
+│   └── document_service.py
+├── db/
+│   ├── session.py
+│   └── migrations/
+└── main.py</code></pre>
+
+    <p>
+      The key principle here is separation of concerns. Endpoints handle HTTP logic, services contain business logic, and models define data structures. This makes testing straightforward and allows different team members to work on different layers without conflicts.
+    </p>
+
+    <h2>Async Patterns for Performance</h2>
+    <p>
+      One of FastAPI's biggest advantages is native async support. However, using it effectively requires understanding when async actually helps:
+    </p>
+
+    <pre><code>from fastapi import FastAPI, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+
+app = FastAPI()
+
+@app.get("/users/{user_id}")
+async def get_user(
+    user_id: int,
+    db: AsyncSession = Depends(get_db)
+):
+    result = await db.execute(
+        select(User).where(User.id == user_id)
+    )
+    user = result.scalar_one_or_none()
+    if not user:
+        raise HTTPException(status_code=404)
+    return user</code></pre>
+
+    <p>
+      Async shines when your API makes I/O-bound calls — database queries, external API calls, file operations. For CPU-bound work, you're better off using background tasks or process pools.
+    </p>
+
+    <h2>Dependency Injection Done Right</h2>
+    <p>
+      FastAPI's dependency injection system is elegant but can become unwieldy without discipline. I use a layered approach:
+    </p>
+
+    <ul>
+      <li><strong>Infrastructure dependencies</strong>: Database sessions, cache connections, external clients</li>
+      <li><strong>Auth dependencies</strong>: Current user, permission checks, token validation</li>
+      <li><strong>Business dependencies</strong>: Service instances, configured validators</li>
+    </ul>
+
+    <p>
+      This layering keeps endpoints clean and makes it trivial to swap implementations for testing.
+    </p>
+
+    <h2>Error Handling Strategy</h2>
+    <p>
+      A consistent error response format is crucial for API consumers. I define custom exception classes and register global handlers:
+    </p>
+
+    <pre><code>class AppException(Exception):
+    def __init__(
+        self,
+        status_code: int,
+        error_code: str,
+        message: str,
+        details: dict | None = None
+    ):
+        self.status_code = status_code
+        self.error_code = error_code
+        self.message = message
+        self.details = details or {}
+
+@app.exception_handler(AppException)
+async def app_exception_handler(request, exc):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "error": exc.error_code,
+            "message": exc.message,
+            "details": exc.details
+        }
+    )</code></pre>
+
+    <h2>Performance Optimization</h2>
+    <p>
+      In production, these strategies have measurably improved our API performance:
+    </p>
+
+    <ol>
+      <li><strong>Connection pooling</strong> — Configure SQLAlchemy's pool size based on your expected concurrency</li>
+      <li><strong>Response caching</strong> — Use Redis for frequently-accessed, rarely-changed data</li>
+      <li><strong>Pagination</strong> — Always paginate list endpoints; cursor-based pagination for large datasets</li>
+      <li><strong>Background tasks</strong> — Offload non-critical work like email notifications and logging</li>
+      <li><strong>Compression</strong> — Enable gzip middleware for large JSON responses</li>
+    </ol>
+
+    <h2>Wrapping Up</h2>
+    <p>
+      Building APIs with FastAPI is genuinely enjoyable. The framework handles the tedious parts — validation, documentation, serialization — so you can focus on business logic. The patterns I've shared here have served me well across multiple enterprise projects. Start simple, add complexity only when needed, and let FastAPI's type system catch errors before your users do.
+    </p>
+
+    <p>
+      Have questions or want to discuss API architecture? <a href="index.html#contact">Get in touch</a> — I'm always happy to talk backend systems.
+    </p>
+  </article>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Sabarnik Lahiri. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="blog.html">← Back to Blog</a></li>
+        <li><a href="index.html">Home</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
